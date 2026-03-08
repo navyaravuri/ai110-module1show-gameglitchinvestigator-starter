@@ -1,8 +1,8 @@
 def get_range_for_difficulty(difficulty: str):
     """Return (low, high) inclusive range for a given difficulty."""
-    if difficulty == "Easy":
+    if difficulty == "Easy":                        #FIX: Refactored logic into logic_utils.py using Copilot Agent mode
         return 1, 20
-    if difficulty == "Normal":
+    if difficulty == "Normal": 
         return 1, 100
     if difficulty == "Hard":
         return 1, 50
@@ -15,7 +15,7 @@ def parse_guess(raw: str):
 
     Returns: (ok: bool, guess_int: int | None, error_message: str | None)
     """
-    if raw is None:
+    if raw is None:                                 #FIX: Refactored logic into logic_utils.py using Copilot Agent mode
         return False, None, "Enter a guess."
 
     if raw == "":
@@ -27,7 +27,11 @@ def parse_guess(raw: str):
         else:
             value = int(raw)
     except Exception:
-        return False, None, "That is not a number."
+        return False, None, "That is not a number."         
+
+    # reject 0 and numbers > 100                    #FIX: Refactored logic into logic_utils.py using Copilot Agent mode
+    if value < 1 or value > 100:
+        return False, None, "Only guess a number within 1 and 100."
 
     return True, value, None
 
@@ -38,7 +42,7 @@ def check_guess(guess, secret):
 
     outcome examples: "Win", "Too High", "Too Low"
     """
-    if guess == secret:
+    if guess == secret:                                     #FIX: Refactored logic into logic_utils.py using Copilot Agent mode
         return "Win", "🎉 Correct!"
 
     try:
@@ -56,7 +60,7 @@ def check_guess(guess, secret):
 
 
 def update_score(current_score: int, outcome: str, attempt_number: int):
-    """Update score based on outcome and attempt number."""
+    """Update score based on outcome and attempt number."""             #FIX: Refactored logic into logic_utils.py using Copilot Agent mode
     if outcome == "Win":
         points = 100 - 10 * (attempt_number + 1)
         if points < 10:
